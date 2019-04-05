@@ -588,6 +588,12 @@ void print_values(unsigned int y,unsigned int x,const char *if_name,t_iface_spee
 #endif
                    /* output Bytes/s */
                    fprintf(tmp_out_file,"%.2Lf%c%.2Lf%c%.2Lf%c",stats_csv_d.bytes.out,csv_char,stats_csv_d.bytes.in,csv_char,stats_csv_d.bytes.total,csv_char);
+#if !NETSTAT_BSD_BYTES && !NETSTAT_NETBSD && NETSTAT
+               if (input_method!=NETSTAT_IN)
+#endif
+                   /* output sum */
+                   fprintf(tmp_out_file,"%llu%c%llu%c%llu%c",full_stats.sum.bytes.out,csv_char,full_stats.sum.bytes.in,csv_char,full_stats.sum.bytes.out+full_stats.sum.bytes.in,csv_char);
+
                /* show packets/s and errors/s */
                fprintf(tmp_out_file,"%.2Lf%c%.2Lf%c%.2Lf",stats_csv_d.packets.out,csv_char,stats_csv_d.packets.in,csv_char,stats_csv_d.packets.total);
                fprintf(tmp_out_file,"%c%.2Lf%c%.2Lf\n",csv_char,stats_csv_d.errors.out,csv_char,stats_csv_d.errors.in);
